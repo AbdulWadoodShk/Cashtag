@@ -1,7 +1,7 @@
 # SentimentalStockStream
 www.hashtagcashtag.com  #Cashtag is a big data pipeline to aggregate twitter data relevant to different stocks for New York Stock Exchange (NYSE) and NASDAQ stock market and provides an analytic framework to perform user sentiment analysis on different stocks and finding the correlation with the corresponding stock price.
 
-## What #Cashtag Does
+## What #SentimentalStockStream Does
  #Cashtag allows user to easily check the top trending stocks @twitter at different time.
 
 ![#Cashtag Demo](Figures/tab1.png)
@@ -17,7 +17,7 @@ Users can also find the time series information about a stock - how many time th
 ![#Cashtag Demo](Figures/tab4.png)
 
 
-# How #Cashtag Works
+# How #SentimentalStockStream Works
  #Cashtag pipeline is based on &#x3bb; architecture.The pipeline consists of an ingestion layer, batch layer, speed layer, serving layer and frontend. The pipeline diagram is shown below:
 
 ![Data Pipeline](Figures/pipeline.png) 
