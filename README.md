@@ -5,18 +5,15 @@ www.hashtagcashtag.com  #Cashtag is a big data pipeline to aggregate twitter dat
  #SentimentalStockStream allows user to easily check the top trending stocks @twitter at different time.
 
 # How #SentimentalStockStream Works
- #Cashtag pipeline is based on &#x3bb; architecture.The pipeline consists of an ingestion layer, batch layer, speed layer, serving layer and frontend. The pipeline diagram is shown below:
+ #SentimentalStockStream pipeline is based on &#x3bb; architecture.The pipeline consists of an ingestion layer, batch layer, speed layer, serving layer and frontend. The pipeline diagram is shown below:
 
-![Data Pipeline](Figures/pipeline.png) 
 
 ## Data Ingestion
- #Cashtag works by pulling twitter data and stock market data. #Cashtag uses the twitter streaming API. Due to the limitation of this API, the current version is limited to pulling data for about 250 stocks including NASDAQ 100, NYSE 100 and some other popular stocks from these to exchange. 
+ #SentimentalStockStream works by pulling twitter data and stock market data. #Cashtag uses the twitter streaming API. Due to the limitation of this API, the current version is limited to pulling data for about 250 stocks including NASDAQ 100, NYSE 100 and some other popular stocks from these to exchange. 
 
-![Raw Twitter File](Figures/twitter.png)
  
- #Cashtag fetches stock price information from www.netfonds.no . The website provides sub-second interval level-1 stock prices delayed by an hour. #Cashtag fetches the stock information for each individual stock every 5 seconds. Some pre-processing is done on this stock information - e.g. adding a ticker information and a timestamp. 
+ #SentimentalStockStream fetches stock price information from www.netfonds.no . The website provides sub-second interval level-1 stock prices delayed by an hour. #Cashtag fetches the stock information for each stock every 5 seconds. Some pre-processing is done on this stock information - e.g. adding a ticker information and a timestamp. 
  
- ![Raw Stock File](Figures/netfonds.png)
  
  A multi-consumer multi-topic Kafka instance acts as the data ingestion platform. Both twitter data and stock data are stored in the Kafka first. Python scripts are written to perform these tasks.
  
@@ -38,12 +35,6 @@ Several taks are performed by the batch layer:
 
  #Cashtag also performs a very simple sentiment analysis over different trending stocks. While the main motivation behind creating #Cashtag was to create the underlying data pipeline that will enable the end users - data scientist, analyst to perform advanced algorithmic analysis to find the sentimets, I also felt it would be interesting to showcase the ability of this platform by showing a simple sentiment analysis. For this task, #Cashtag looks for keywords in each tweets and provides a score of +1 for every positive word it encounters and a -1 for every negative word. The overall sentiment of that tweet then is the sum of all the score of all the words in the tweet.
  
-![Raw Stock File](Figures/sentiment.png)
-
-
-
-![Raw Stock File](Figures/batch_result0.png)
-![Raw Stock File](Figures/batch_result1.png)
 
 # Speed Layer
 
@@ -51,7 +42,6 @@ Speed layer in #Cashtag performs multiple operations. The tool of choice for spe
 
 ## Incremental algorithm to supplement batch layer
 
-![Raw Stock File](Figures/batch_streaming.png)
 
 One of the motivation behind having a speed layer in lambda architecture is to supplement the batch layer. The batch layer implements re-computation algorithm that works on the entire sets of raw data and compute the necessary results. Since batch layer is working on the entire raw data set, it is generally time intensive and takes long time to process the entire sets of data. In such cases, speed layer works on the most recent data and provide real time result for these data. While the algorithm in batch layer was re-computation algorithm, the algorithm in speed layer is incremental in nature. 
 
